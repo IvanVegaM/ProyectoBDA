@@ -32,7 +32,8 @@ export async function getFour(req: Request, res: Response) {
 }
 
 export async function getFive(req: Request, res: Response) {
-  const genres = await getTopGenresByCountry();
+  const countries = req.query.countries as string;
+  const genres = await getTopGenresByCountry(countries);
   res.status(200).send({ genres });
 }
 
@@ -42,12 +43,16 @@ export async function getSix(req: Request, res: Response) {
 }
 
 export async function getSeven(req: Request, res: Response) {
-  const games = await getTopSellingGamesEachFiveYears();
+  const lowerYear = req.query.lowerYear as string;
+  const upperYear = req.query.upperYear as string;
+  const games = await getTopSellingGamesEachFiveYears(lowerYear, upperYear);
   res.status(200).send({ games });
 }
 
 export async function getEight(req: Request, res: Response) {
-  const sales = await getSalesOfBestRatedGames();
+  const lowerRating = req.query.lowerRating as string;
+  const upperRating = req.query.upperRating as string;
+  const sales = await getSalesOfBestRatedGames(lowerRating, upperRating);
   res.status(200).send({ sales });
 }
 

@@ -28,10 +28,9 @@ export async function getSalesByCountry() {
   );
 }
 
-export async function getTopGenresByCountry() {
+export async function getTopGenresByCountry(countries: string) {
   return await execute<{ genre: string; totalSales: number }[]>(
-    dashboardQueries.topGenresByCountry,
-    []
+    dashboardQueries.topGenresByCountry, countries
   );
 }
 
@@ -42,17 +41,15 @@ export async function getTotalSalesByYear() {
   );
 }
 
-export async function getTopSellingGamesEachFiveYears() {
+export async function getTopSellingGamesEachFiveYears(lowerYear: string, upperYear: string) {
   return await execute<{ game: string; year: string; totalSales: number }[]>(
-    dashboardQueries.topGamesEachFiveYears,
-    []
+    dashboardQueries.topGamesEachFiveYears, [lowerYear, upperYear]
   );
 }
 
-export async function getSalesOfBestRatedGames() {
+export async function getSalesOfBestRatedGames(lowerRating: string, upperRating: string) {
   return await execute<{ game: string; rating: number; totalSales: number }[]>(
-    dashboardQueries.totalSalesByGameRating,
-    []
+    dashboardQueries.totalSalesByGameRating, [lowerRating, upperRating]
   );
 }
 

@@ -15,11 +15,10 @@ export default {
     GROUP by games.title
     order by totalSales DESC;`,
   totalSalesByCountry: `select sales.country, sum(sales.totalSales) as totalSales from sales GROUP by country order by totalSales DESC;`,
-  //TODO: Change to allow multiple countries in query below
   topGenresByCountry: `
     SELECT genres.name AS genre, SUM(sales.totalSales) AS totalSales
     FROM genres, gameGenre, sales WHERE
-    sales.country = ? AND
+    sales.country IN (?) AND
     genres.id = gameGenre.genreId AND
     gameGenre.gameId = sales.gameId
     GROUP BY genres.id
