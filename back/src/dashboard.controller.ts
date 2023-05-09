@@ -32,8 +32,10 @@ export async function getFour(req: Request, res: Response) {
 }
 
 export async function getFive(req: Request, res: Response) {
-  const countries = req.query.countries as string;
-  const genres = await getTopGenresByCountry(countries);
+  const countriesQuery = req.query.countries as string;
+  const countries = countriesQuery.split("_").map(x => `'${x}'`)
+  const countriesString = countries.toString();
+  const genres = await getTopGenresByCountry(countriesString);
   res.status(200).send({ genres });
 }
 
