@@ -43,7 +43,7 @@ export async function getTotalSalesByYear() {
 }
 
 export async function getTopSellingGamesEachFiveYears() {
-  return await execute<{ game: string; totalSales: number }[]>(
+  return await execute<{ game: string; year: string; totalSales: number }[]>(
     dashboardQueries.topGamesEachFiveYears,
     []
   );
