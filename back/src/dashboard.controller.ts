@@ -1,17 +1,14 @@
 import { Request, Response } from "express";
 import {
-  getBestRatedGames,
   getGameSalesByPlatform,
+  getSalesByCountry,
   getSalesOfBestRatedGames,
-  getTopCountryByGame,
-  getTopSellingGames,
+  getTopGenresByCountry,
   getTopSellingGamesEachFiveYears,
-  getTopSellingGenres,
   getTotalSalesByGame,
   getTotalSalesByPlatform,
   getTotalSalesByYear,
   getWishlist,
-  getWorstGames,
 } from "./dashboard.data.js";
 
 export async function getOne(req: Request, res: Response) {
@@ -30,46 +27,31 @@ export async function getThree(req: Request, res: Response) {
 }
 
 export async function getFour(req: Request, res: Response) {
-  const topCountry = await getTopCountryByGame();
-  res.status(200).send({ topCountry });
+  const gameSales = await getSalesByCountry();
+  res.status(200).send({ gameSales });
 }
 
 export async function getFive(req: Request, res: Response) {
-  const worstGames = await getWorstGames();
-  res.status(200).send({ worstGames });
+  const genres = await getTopGenresByCountry();
+  res.status(200).send({ genres });
 }
 
 export async function getSix(req: Request, res: Response) {
-  const totalSalesByYear = await getTotalSalesByYear();
-  res.status(200).send({ totalSalesByYear });
+  const totalSales = await getTotalSalesByYear();
+  res.status(200).send({ totalSales });
 }
 
 export async function getSeven(req: Request, res: Response) {
-  const topSellingGames = await getTopSellingGames();
-  res.status(200).send({ topSellingGames });
+  const games = await getTopSellingGamesEachFiveYears();
+  res.status(200).send({ games });
 }
 
 export async function getEight(req: Request, res: Response) {
-  const topSellingGames = await getTopSellingGamesEachFiveYears();
-  res.status(200).send({ topSellingGames });
+  const sales = await getSalesOfBestRatedGames();
+  res.status(200).send({ sales });
 }
 
 export async function getNine(req: Request, res: Response) {
-  const topSellingGenres = await getTopSellingGenres();
-  res.status(200).send({ topSellingGenres });
-}
-
-export async function getTen(req: Request, res: Response) {
-  const bestRatedGames = await getBestRatedGames();
-  res.status(200).send({ bestRatedGames });
-}
-
-export async function getEleven(req: Request, res: Response) {
-  const salesBestRatedGames = await getSalesOfBestRatedGames();
-  res.status(200).send({ salesBestRatedGames });
-}
-
-export async function getTwelve(req: Request, res: Response) {
   const wishlist = await getWishlist();
   res.status(200).send({ wishlist });
 }
