@@ -28,10 +28,14 @@ export async function getSalesByCountry() {
   );
 }
 
-export async function getTopGenresByCountry(countries: string) {
-  console.log(countries);
+export async function getTopGenresByCountry(
+  countries: string[],
+  paramSQL: string
+) {
   return await execute<{ genre: string; totalSales: number } & RowDataPacket>(
-    dashboardQueries.topGenresByCountry,
+    dashboardQueries.topGenresByCountryPartOne +
+      paramSQL +
+      dashboardQueries.topGenresByCountryPartTwo,
     countries
   );
 }

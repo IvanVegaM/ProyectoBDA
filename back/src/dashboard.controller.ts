@@ -18,7 +18,30 @@ export async function getOne(req: Request, res: Response) {
 
 export async function getTwo(req: Request, res: Response) {
   const gameByConsole = await getGameSalesByPlatform();
-  res.status(200).send({ gameByConsole });
+  const gameMap = new Map<string, { platform: string; sales: number }[]>();
+  for (let i = 0; i < gameByConsole.length; i++) {
+    if (gameMap.get(gameByConsole[i].game) == undefined) {
+      gameMap.set(gameByConsole[i].game, [
+        { platform: gameByConsole[i].platform, sales: gameByConsole[i].sales },
+      ]);
+    } else {
+      gameMap.get(gameByConsole[i].game)?.push({
+        platform: gameByConsole[i].platform,
+        sales: gameByConsole[i].sales,
+      });
+    }
+  }
+  const games = new Array<{
+    game: string;
+    sales: { platform: string; sales: number }[];
+  }>();
+  for (let entry of gameMap.entries()) {
+    games.push({
+      game: entry[0],
+      sales: entry[1],
+    });
+  }
+  res.status(200).send({ games });
 }
 
 export async function getThree(req: Request, res: Response) {
@@ -33,9 +56,13 @@ export async function getFour(req: Request, res: Response) {
 
 export async function getFive(req: Request, res: Response) {
   const countriesQuery = req.query.countries as string;
-  const countries = countriesQuery.split("_").map(x => `'${x}'`)
-  const countriesString = countries.toString();
-  const genres = await getTopGenresByCountry(countriesString);
+  const countries = countriesQuery.split("_");
+  var paramsSQL = "(";
+  for (let i = 0; i < countries.length; i++) {
+    paramsSQL += "?,";
+  }
+  paramsSQL = paramsSQL.substring(0, paramsSQL.length - 1) + ")";
+  const genres = await getTopGenresByCountry(countries, paramsSQL);
   res.status(200).send({ genres });
 }
 
@@ -47,7 +74,10 @@ export async function getSix(req: Request, res: Response) {
 export async function getSeven(req: Request, res: Response) {
   const lowerYear = req.query.lowerYear as string;
   const upperYear = req.query.upperYear as string;
-  const games = await getTopSellingGamesEachFiveYears(lowerYear, upperYear);
+  const games = await getTopSellingGamesEachFiveYears(
+    lowerYear + "-01-01",
+    upperYear + "-12-31"
+  );
   res.status(200).send({ games });
 }
 
