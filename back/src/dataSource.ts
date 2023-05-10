@@ -1,4 +1,4 @@
-import { createPool, Pool } from "mysql";
+import { createPool, Pool, RowDataPacket } from "mysql2";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -21,18 +21,18 @@ export const init = () => {
   }
 };
 
-export const execute = <T>(
+export const execute = <T extends RowDataPacket>(
   query: string,
   params: string[] | Object
-): Promise<T> => {
+): Promise<T[]> => {
   try {
     if (!pool)
       throw new Error(
         "Pool was not created. Ensure pool is created when running the app."
       );
 
-    return new Promise<T>((resolve, reject) => {
-      pool.query(query, params, (error, results) => {
+    return new Promise<T[]>((resolve, reject) => {
+      pool.query<T[]>(query, params, (error, results) => {
         if (error) reject(error);
         else resolve(results);
       });
