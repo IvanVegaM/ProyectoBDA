@@ -12,6 +12,7 @@ export const init = () => {
       user: process.env.MY_SQL_DB_USER,
       password: process.env.MY_SQL_DB_PASSWORD,
       database: process.env.MY_SQL_DB_DATABASE,
+      port: process.env.MY_SQL_DB_PORT as any as number,
     });
 
     console.debug("MySql Adapter Pool generated successfully");
