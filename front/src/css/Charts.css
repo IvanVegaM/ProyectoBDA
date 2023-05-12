@@ -1,0 +1,12 @@
+.chart-container {
+  width: 85vw;
+  height: 100vh;
+  /*background-color: aqua; */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.creators {
+  color: rgb(25, 25, 25);
+}

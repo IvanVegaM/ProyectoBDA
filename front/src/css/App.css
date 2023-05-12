@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: rgb(245, 245, 245);
+  margin: 0;
+}
+
+.content-container {
+  margin-left: 12vw;
+  padding: 12px;
+}
