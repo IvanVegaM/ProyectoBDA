@@ -3,12 +3,15 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 10, 2023 at 01:59 AM
+-- Generation Time: May 17, 2023 at 03:04 AM
 -- Server version: 8.0.33
 -- PHP Version: 8.2.5
 
 START TRANSACTION;
 
+--
+-- Database: `proyectoBD`
+--
 CREATE DATABASE IF NOT EXISTS `proyectoBD`;
 USE `proyectoBD`;
 
@@ -3677,7 +3680,7 @@ CREATE TABLE `games` (
   `playing` int DEFAULT NULL,
   `backlogs` int DEFAULT NULL,
   `wishlist` int DEFAULT NULL
-);
+)
 
 --
 -- Dumping data for table `games`
@@ -7601,40 +7604,41 @@ INSERT INTO `genres` (`id`, `name`) VALUES
 
 CREATE TABLE `platforms` (
   `id` int NOT NULL,
-  `name` varchar(1500) DEFAULT NULL
+  `name` varchar(1500) DEFAULT NULL,
+  `generation` int DEFAULT NULL
 );
 
 --
 -- Dumping data for table `platforms`
 --
 
-INSERT INTO `platforms` (`id`, `name`) VALUES
-(1, 'Intellivision'),
-(2, 'ColecoVision'),
-(3, 'Atari 5200'),
-(4, 'NES'),
-(5, 'Master system'),
-(6, 'Atari 7800'),
-(7, 'TurboGrafx-16'),
-(8, 'Sega Genesis'),
-(9, 'SNES'),
-(10, 'Atari Jaguar'),
-(11, 'Sega Saturn'),
-(12, 'Playstation'),
-(13, 'Nintendo 64'),
-(14, 'Dreamcast'),
-(15, 'Playstation 2'),
-(16, 'GameCube'),
-(17, 'Xbox'),
-(18, 'Xbox 360'),
-(19, 'Playstation 3'),
-(20, 'Wii'),
-(21, 'Playstation 4'),
-(22, 'Xbox One'),
-(23, 'Nintendo Switch'),
-(24, 'Playstation 5'),
-(25, 'Xbox Series X'),
-(26, 'PC');
+INSERT INTO `platforms` (`id`, `name`, `generation`) VALUES
+(1, 'Intellivision', 1),
+(2, 'ColecoVision', 1),
+(3, 'Atari 5200', 1),
+(4, 'NES', 2),
+(5, 'Master system', 2),
+(6, 'Atari 7800', 2),
+(7, 'TurboGrafx-16', 3),
+(8, 'Sega Genesis', 3),
+(9, 'SNES', 3),
+(10, 'Atari Jaguar', 4),
+(11, 'Sega Saturn', 4),
+(12, 'Playstation', 4),
+(13, 'Nintendo 64', 4),
+(14, 'Dreamcast', 4),
+(15, 'Playstation 2', 5),
+(16, 'GameCube', 5),
+(17, 'Xbox', 5),
+(18, 'Xbox 360', 6),
+(19, 'Playstation 3', 6),
+(20, 'Wii', 6),
+(21, 'Playstation 4', 7),
+(22, 'Xbox One', 7),
+(23, 'Nintendo Switch', 7),
+(24, 'Playstation 5', 8),
+(25, 'Xbox Series X', 8),
+(26, 'PC', 8);
 
 -- --------------------------------------------------------
 

@@ -12,7 +12,8 @@ import {
 } from "./dashboard.data.js";
 
 export async function getOne(req: Request, res: Response) {
-  const platformSales = await getTotalSalesByPlatform();
+  const generation = req.query.generation as string;
+  const platformSales = await getTotalSalesByPlatform(generation);
   res.status(200).send({ platformSales });
 }
 

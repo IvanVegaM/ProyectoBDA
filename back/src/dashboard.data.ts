@@ -2,10 +2,10 @@ import { RowDataPacket } from "mysql2";
 import dashboardQueries from "./dashboard.queries.js";
 import { execute } from "./dataSource.js";
 
-export async function getTotalSalesByPlatform() {
+export async function getTotalSalesByPlatform(generation: string) {
   return await execute<
     { platform: string; totalSales: number } & RowDataPacket
-  >(dashboardQueries.totalSalesByPlatform, []);
+  >(dashboardQueries.totalSalesByPlatform, generation);
 }
 
 export async function getGameSalesByPlatform() {

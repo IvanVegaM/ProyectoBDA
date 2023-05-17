@@ -1,7 +1,7 @@
 export default {
   totalSalesByPlatform: `
     select platforms.name as platform, sum(sales.totalSales) as totalSales from platforms, sales WHERE
-    platforms.id = sales.platformId
+    platforms.id = sales.platformId and platforms.generation = ?
     GROUP by platforms.name;`,
   gameSalesByPlatform: `
     select games.title as game, platforms.name as platform, sum(sales.totalSales) as sales from platforms, sales, games WHERE
