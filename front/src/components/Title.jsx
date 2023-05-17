@@ -1,7 +1,7 @@
 import "./css/Title.css";
 
 function Title() {
-  return <h1 className='title'>Videojuegos entre 1980 y 2023</h1>;
+  return <h1 className='title'>Análisis Ventas de Videojuegos</h1>;
 }
 
 export default Title;

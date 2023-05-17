@@ -5,21 +5,33 @@ import "./css/PieChart.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-function PieChart(props) {
+function PieChartGetOne(props) {
   const [data, setData] = useState({});
 
   useEffect(() => {
     let ignore = false;
     var labels = [];
     var dataLabels = [];
+    var backgroundColors = [];
+    var borderColors = [];
+    var temporalColor = "";
 
     async function startFetching() {
-      const json = await props.getData(data, setData);
+      const json = await props.getData();
       if (!ignore) {
         if (json.platformSales) {
           for (let i = 0; i < json.platformSales.length; i++) {
+            // Get the labels and data for the pie chart
             labels.push(json.platformSales[i].platform);
             dataLabels.push(json.platformSales[i].totalSales);
+            // Generate random colors for the pie chart
+            temporalColor = `rgba(${Math.floor(
+              Math.random() * 255
+            )}, ${Math.floor(Math.random() * 255)}, ${Math.floor(
+              Math.random() * 255
+            )}`;
+            borderColors.push(temporalColor + ")");
+            backgroundColors.push(temporalColor + ", 0.5)");
           }
         }
 
@@ -27,24 +39,10 @@ function PieChart(props) {
           labels: labels,
           datasets: [
             {
-              label: "Ventas totales ($)",
+              label: "Ventas totales en MDU",
               data: dataLabels,
-              backgroundColor: [
-                "rgba(255, 99, 132, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(255, 206, 86, 0.2)",
-                "rgba(75, 192, 192, 0.2)",
-                "rgba(153, 102, 255, 0.2)",
-                "rgba(255, 159, 64, 0.2)",
-              ],
-              borderColor: [
-                "rgba(255, 99, 132, 1)",
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
-                "rgba(75, 192, 192, 1)",
-                "rgba(153, 102, 255, 1)",
-                "rgba(255, 159, 64, 1)",
-              ],
+              backgroundColor: backgroundColors,
+              borderColor: borderColors,
               borderWidth: 1,
             },
           ],
@@ -67,13 +65,13 @@ function PieChart(props) {
       },
       title: {
         display: true,
-        text: "Dinero generado por plataforma",
+        text: "Videojuegos vendidos por plataforma en Millones de Unidades (MDU)",
       },
     },
   };
 
   if (Object.keys(data).length !== 0) {
-    console.log("pie chart: ", data);
+    // console.log("pie chart: ", data);
     return (
       <>
         <div className='pie-chart'>
@@ -84,4 +82,4 @@ function PieChart(props) {
   }
 }
 
-export default PieChart;
+export default PieChartGetOne;

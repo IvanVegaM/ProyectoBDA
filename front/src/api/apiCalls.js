@@ -22,13 +22,14 @@ export async function getDos() {
   }
 }
 
-export async function getTres(gameSales, setGameSales) {
+export async function getTres() {
   try {
     const response = await fetch(API_URL + "/tres");
-    setGameSales(await response.json());
-    console.log("Tres ", gameSales);
+    const json = await response.json();
+    return json;
   } catch (error) {
     console.error(error);
+    return json;
   }
 }
 
@@ -42,24 +43,69 @@ export async function getCuatro(gameSales2, setGameSales2) {
   }
 }
 
-export async function getCinco(genres, setGenres) {
+export async function getCinco(countries) {
   try {
     const response = await fetch(
-      API_URL + "/cinco?" + new URLSearchParams({ countries: "MX" })
+      API_URL + "/cinco?" + new URLSearchParams({ countries: countries })
     );
-    setGenres(await response.json());
-    console.log("Cinco ", genres);
+    const json = await response.json();
+    return json;
   } catch (error) {
     console.error(error);
   }
 }
 
-export async function getSeis(totalSales, setTotalSales) {
+export async function getSeis() {
   try {
     const response = await fetch(API_URL + "/seis");
-    setTotalSales(await response.json());
-    console.log("Seis ", totalSales);
+    const json = await response.json();
+    return json;
   } catch (error) {
     console.error(error);
+    return json;
+  }
+}
+
+export async function getSiete(lowerYear, upperYear) {
+  try {
+    const response = await fetch(
+      API_URL +
+        "/siete?" +
+        new URLSearchParams({ lowerYear: lowerYear, upperYear: upperYear })
+    );
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error);
+    return json;
+  }
+}
+
+export async function getOcho(lowerRating, upperRating) {
+  try {
+    const response = await fetch(
+      API_URL +
+        "/ocho?" +
+        new URLSearchParams({
+          lowerRating: lowerRating,
+          upperRating: upperRating,
+        })
+    );
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error);
+    return json;
+  }
+}
+
+export async function getNueve() {
+  try {
+    const response = await fetch(API_URL + "/nueve");
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error);
+    return json;
   }
 }

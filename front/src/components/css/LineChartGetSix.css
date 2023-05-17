@@ -1,5 +1,4 @@
-.pie-chart {
-  width: 35%;
+.line-chart-six {
   height: 30vw;
   display: flex;
   align-items: center;
@@ -8,4 +7,5 @@
   border-radius: 20px;
   padding: 24px;
   box-shadow: 0px 5px 15px rgb(0 0 0 / 0.2);
+  margin-bottom: 50px;
 }

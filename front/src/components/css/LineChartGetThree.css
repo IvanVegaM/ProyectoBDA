@@ -1,6 +1,6 @@
-.pie-chart {
-  width: 35%;
+.line-chart {
   height: 30vw;
+  width: 55%;
   display: flex;
   align-items: center;
   justify-content: center;
