@@ -3680,7 +3680,7 @@ CREATE TABLE `games` (
   `playing` int DEFAULT NULL,
   `backlogs` int DEFAULT NULL,
   `wishlist` int DEFAULT NULL
-)
+);
 
 --
 -- Dumping data for table `games`
