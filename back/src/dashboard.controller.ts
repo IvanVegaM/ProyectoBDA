@@ -37,9 +37,16 @@ export async function getTwo(req: Request, res: Response) {
     sales: { platform: string; sales: number }[];
   }>();
   for (let entry of gameMap.entries()) {
+    const platforms = new Array<{ platform: string; sales: number }>();
+    let counter = 0;
+    for (let i = 0; i < entry[1].length; i++) {
+      if (i < 3) platforms.push(entry[1][i]);
+      else counter += entry[1][i].sales;
+    }
+    platforms.push({ platform: "otras", sales: counter });
     games.push({
       game: entry[0],
-      sales: entry[1],
+      sales: platforms,
     });
   }
   res.status(200).send({ games });
