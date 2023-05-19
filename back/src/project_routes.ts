@@ -8,6 +8,7 @@ import {
   getSeven,
   getSix,
   getThree,
+  getTop,
   getTwo,
 } from "./dashboard.controller.js";
 
@@ -22,5 +23,6 @@ router.getAsync("/seis", getSix);
 router.getAsync("/siete", getSeven);
 router.getAsync("/ocho", getEight);
 router.getAsync("/nueve", getNine);
+router.getAsync("/top", getTop);
 
 export default router;

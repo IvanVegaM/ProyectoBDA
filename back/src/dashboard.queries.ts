@@ -38,4 +38,22 @@ export default {
     GROUP BY games.id
     ORDER BY totalSales DESC;`,
   wishlist: `select games.title as game, games.wishlist from games order by games.wishlist DESC;`,
+  topPlatform: `
+    select platforms.name as platform from platforms, sales WHERE
+    platforms.id = sales.platformId
+    GROUP by platforms.name limit 1;`,
+  topGenre: `select genres.name as genre from genres, gameGenre, sales 
+    where genres.id = gameGenre.genreId and gameGenre.gameId = sales.gameId 
+    group by genres.id order by sum(sales.totalSales) desc limit 1;`,
+  topYear: `SELECT YEAR(games.releaseDate) AS year FROM games, sales WHERE
+    games.id = sales.gameId
+    GROUP BY year
+    ORDER BY sum(sales.totalSales) DESC limit 1;`,
+  averageSales: `SELECT AVG(averageSales) AS totalAverageSales
+    FROM (
+      SELECT AVG(sales.totalSales) AS averageSales
+      FROM games, sales
+      where games.id = sales.gameId
+      GROUP BY games.title
+    ) AS subquery;`,
 };
