@@ -1,10 +1,16 @@
 import { Request, Response } from "express";
 import {
+  getAverageSales,
   getGameSalesByPlatform,
   getSalesByCountry,
   getSalesOfBestRatedGames,
+  getTopGame,
+  getTopGenre,
   getTopGenresByCountry,
+  getTopPlatform,
   getTopSellingGamesEachFiveYears,
+  getTopWishlistedGame,
+  getTopYear,
   getTotalSalesByGame,
   getTotalSalesByPlatform,
   getTotalSalesByYear,
@@ -99,4 +105,23 @@ export async function getEight(req: Request, res: Response) {
 export async function getNine(req: Request, res: Response) {
   const wishlist = await getWishlist();
   res.status(200).send({ wishlist });
+}
+
+export async function getTop(req: Request, res: Response) {
+  const topGame = await getTopGame();
+  const topPlatform = await getTopPlatform();
+  const topYear = await getTopYear();
+  const topGenre = await getTopGenre();
+  const topWishlistedGame = await getTopWishlistedGame();
+  const totalAveragaSales = await getAverageSales();
+  res
+    .status(200)
+    .send({
+      topGame,
+      topPlatform,
+      topYear,
+      topGenre,
+      topWishlistedGame,
+      totalAveragaSales,
+    });
 }

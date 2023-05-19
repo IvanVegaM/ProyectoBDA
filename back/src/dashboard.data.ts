@@ -71,3 +71,53 @@ export async function getWishlist() {
     []
   );
 }
+
+export async function getTopGame() {
+  var query = dashboardQueries.totalSalesByGame;
+  query = query.substring(0, query.length - 1) + " limit 1;";
+  const game = await execute<
+    { game: string; totalSales: number } & RowDataPacket
+  >(query, []);
+  return game[0].game;
+}
+
+export async function getTopPlatform() {
+  const platform = await execute<{ platform: string } & RowDataPacket>(
+    dashboardQueries.topPlatform,
+    []
+  );
+  return platform[0].platform;
+}
+
+export async function getTopYear() {
+  const year = await execute<{ year: string } & RowDataPacket>(
+    dashboardQueries.topYear,
+    []
+  );
+  return year[0].year;
+}
+
+export async function getTopGenre() {
+  const genre = await execute<{ genre: string } & RowDataPacket>(
+    dashboardQueries.topGenre,
+    []
+  );
+  return genre[0].genre;
+}
+
+export async function getTopWishlistedGame() {
+  var query = dashboardQueries.wishlist;
+  query = query.substring(0, query.length - 1) + " limit 1;";
+  const game = await execute<
+    { game: string; wishlist: string } & RowDataPacket
+  >(query, []);
+  return game[0].game;
+}
+
+export async function getAverageSales() {
+  const sales = await execute<{ totalAverageSales: number } & RowDataPacket>(
+    dashboardQueries.averageSales,
+    []
+  );
+  return sales[0].totalAverageSales;
+}
