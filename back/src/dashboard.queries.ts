@@ -49,9 +49,9 @@ export default {
     games.id = sales.gameId
     GROUP BY year
     ORDER BY sum(sales.totalSales) DESC limit 1;`,
-  averageSales: `SELECT AVG(averageSales) AS totalAverageSales
+  averageSales: `SELECT AVG(totalSales) AS totalAverageSales
     FROM (
-      SELECT AVG(sales.totalSales) AS averageSales
+      SELECT SUM(sales.totalSales) AS totalSales
       FROM games, sales
       where games.id = sales.gameId
       GROUP BY games.title
