@@ -17,6 +17,7 @@ import TableGetFive from "./components/TableGetFive";
 import TableGetNine from "./components/TableGetNine";
 import BarChartGetSeven from "./components/BarChartGetSeven";
 import LineChartGetEight from "./components/LineChartGetEight";
+import MapChart from "./components/MapChart";
 
 export function Charts() {
   return (
@@ -27,6 +28,7 @@ export function Charts() {
           <LineChartGetThree getData={getTres} />
         </div>
         <BarChartGetTwo getData={getDos} />
+        <MapChart pais='Todos' />
         <LineChartGetSix getData={getSeis} />
         <div className='tables'>
           <TableGetFive getData={getCinco} />

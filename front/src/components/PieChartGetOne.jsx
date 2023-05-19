@@ -6,6 +6,7 @@ import "./css/PieChart.css";
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 function PieChartGetOne(props) {
+  let [value, setValue] = useState(1);
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -17,7 +18,7 @@ function PieChartGetOne(props) {
     var temporalColor = "";
 
     async function startFetching() {
-      const json = await props.getData();
+      const json = await props.getData(value);
       if (!ignore) {
         if (json.platformSales) {
           for (let i = 0; i < json.platformSales.length; i++) {
@@ -55,7 +56,11 @@ function PieChartGetOne(props) {
     return () => {
       ignore = true;
     };
-  }, [true]);
+  }, [value]);
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
 
   const options = {
     responsive: true,
@@ -65,7 +70,7 @@ function PieChartGetOne(props) {
       },
       title: {
         display: true,
-        text: "Videojuegos vendidos por plataforma en Millones de Unidades (MDU)",
+        text: "Videojuegos vendidos por plataforma en Millones de Unidades (MDU) de la generación seleccionada",
       },
     },
   };
@@ -75,6 +80,19 @@ function PieChartGetOne(props) {
     return (
       <>
         <div className='pie-chart'>
+          <div className='selector-pie'>
+            <label>Elige una generación:</label>
+            <select value={value} onChange={handleChange}>
+              <option value='1'>Primera</option>
+              <option value='2'>Segunda</option>
+              <option value='3'>Tercera</option>
+              <option value='4'>Cuarta</option>
+              <option value='5'>Quinta</option>
+              <option value='6'>Sexta</option>
+              <option value='7'>Séptima</option>
+              <option value='8'>Octava</option>
+            </select>
+          </div>
           <Pie options={options} data={data} />
         </div>
       </>

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,8 +8,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
-import { useState, useEffect } from "react";
+import { Line, getElementAtEvent } from "react-chartjs-2";
+import React, { useState, useEffect, useRef } from "react";
 import "./css/LineChartGetEight.css";
 
 ChartJS.register(
@@ -25,60 +24,35 @@ ChartJS.register(
 
 function LineChartGetEight(props) {
   const [data, setData] = useState({});
-  const [lowerRating, setLowerRating] = useState(0);
-  const [upperRating, setUpperRating] = useState(5);
-  const [inputValueInitial, setInputValueInitial] = useState(lowerRating);
-  const [inputValueFinal, setInputValueFinal] = useState(upperRating);
+  const [lowerValue, setLowerValue] = useState(0);
+  const [upperValue, setUpperValue] = useState(5);
+  const [bestThree, setBestThree] = useState([]);
 
-  useEffect(() => {
-    if (
-      inputValueInitial < upperRating &&
-      inputValueInitial >= 0 &&
-      inputValueInitial < 5
-    ) {
-      setLowerRating(inputValueInitial);
-    }
-  }, [inputValueInitial]);
-
-  useEffect(() => {
-    if (
-      inputValueFinal > lowerRating &&
-      inputValueFinal <= 5 &&
-      inputValueFinal > 0
-    ) {
-      setUpperRating(inputValueFinal);
-    }
-  }, [inputValueFinal]);
-
-  const handleInputValueInitialChange = (event) => {
-    setInputValueInitial(event.target.value);
-  };
-
-  const handleInputValueFinalChange = (event) => {
-    setInputValueFinal(event.target.value);
+  const chartRef = useRef();
+  const onClick = (event) => {
+    if (getElementAtEvent(chartRef.current, event).length === 0) return;
+    console.log(getElementAtEvent(chartRef.current, event));
+    console.log(getElementAtEvent(chartRef.current, event)[0].index);
+    setLowerValue(getElementAtEvent(chartRef.current, event)[0].index);
+    setUpperValue(getElementAtEvent(chartRef.current, event)[0].index + 0.9);
   };
 
   useEffect(() => {
     let ignore = false;
     var labels = [0, 1, 2, 3, 4, 5];
-    var dataLabels = [];
     var salesPerRating = [0, 0, 0, 0, 0, 0];
     var temporalIndex = -1;
 
     async function startFetching() {
-      const json = await props.getData(lowerRating, upperRating);
-      console.log("ocho: ", json);
+      const json = await props.getData(0, 5);
+      // console.log("ocho: ", json);
       if (!ignore) {
         if (json.sales) {
           for (let i = 0; i < json.sales.length; i++) {
-            // labels.push(json.sales[i].game + " (" + json.sales[i].rating + ")");
-            // dataLabels.push(json.sales[i].totalSales);
             temporalIndex = Math.floor(json.sales[i].rating);
             salesPerRating[temporalIndex] =
               salesPerRating[temporalIndex] + json.sales[i].totalSales;
           }
-
-          console.log("salesPerRating: ", salesPerRating);
         }
 
         setData({
@@ -99,7 +73,37 @@ function LineChartGetEight(props) {
     return () => {
       ignore = true;
     };
-  }, [lowerRating, upperRating]);
+  }, [true]);
+
+  useEffect(() => {
+    let ignore = false;
+    var bestThreeTemporal = [];
+    var length = 3;
+
+    async function startFetching() {
+      const json = await props.getData(lowerValue, upperValue);
+      if (!ignore) {
+        if (json.sales) {
+          bestThreeTemporal = [];
+          if (json.sales.length < 3) {
+            length = json.sales.length;
+          }
+
+          for (let i = 0; i < length; i++) {
+            bestThreeTemporal.push(json.sales[i]);
+          }
+
+          setBestThree(bestThreeTemporal);
+        }
+      }
+    }
+
+    startFetching();
+
+    return () => {
+      ignore = true;
+    };
+  }, [lowerValue, upperValue]);
 
   const options = {
     responsive: true,
@@ -118,20 +122,43 @@ function LineChartGetEight(props) {
     return (
       <>
         <div className='line-chart-eight'>
-          <div className='inputs'>
-            <p>Elige el intervalo de calificaciones a mostrar (0 - 5): </p>
-            <p>Calificación inicial:</p>
-            <input
-              value={inputValueInitial}
-              onChange={handleInputValueInitialChange}
-            />
-            <p>Calificación final:</p>
-            <input
-              value={inputValueFinal}
-              onChange={handleInputValueFinalChange}
+          <div className='chart'>
+            <Line
+              ref={chartRef}
+              options={options}
+              data={data}
+              onClick={onClick}
             />
           </div>
-          <Line options={options} data={data} />;
+          <div className='best-three'>
+            {bestThree.length !== 0 ? (
+              <>
+                {lowerValue === 0 && upperValue === 5 ? (
+                  <h3>
+                    Los mejores juegos de todas las calificaciones por ventas
+                    son:
+                  </h3>
+                ) : (
+                  <h3>
+                    Los mejores juegos de {lowerValue} estrellas por ventas son:
+                  </h3>
+                )}
+
+                <ol>
+                  {bestThree.map((gameObject) => {
+                    return (
+                      <li key={gameObject.game}>
+                        {gameObject.game} {gameObject.rating} con{" "}
+                        {gameObject.totalSales.toFixed(2)} MDU
+                      </li>
+                    );
+                  })}
+                </ol>
+              </>
+            ) : (
+              <h3>No hay juegos en esta categoría</h3>
+            )}
+          </div>
         </div>
       </>
     );
