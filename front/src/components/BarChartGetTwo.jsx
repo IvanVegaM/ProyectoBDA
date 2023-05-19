@@ -39,7 +39,7 @@ function BarChartGetTwo(props) {
 
     async function startFetching() {
       const json = await props.getData();
-      console.log(json);
+      // console.log(json);
       if (!ignore) {
         if (json.games) {
           for (let i = 0; i < json.games.length; i++) {
@@ -48,25 +48,25 @@ function BarChartGetTwo(props) {
               temporalTotalCount += sale.sales;
             });
             temporalMap.set(json.games[i].game, temporalTotalCount);
-            for (let sale of json.games[i].sales) {
-              temporalLabels.add(sale.platform);
-            }
           }
         }
-        console.log(temporalMap);
+        // console.log(temporalMap);
         sortedMap = new Map([...temporalMap].sort((a, b) => b[1] - a[1]));
-        console.log("sortedMap: ", sortedMap);
-        labels = Array.from(temporalLabels);
-        console.log("labels: ", labels);
+        // console.log("sortedMap: ", sortedMap);
 
         for (let i = 0; i < 10; i++) {
           json.games.forEach((gameObject) => {
             if (gameObject.game === Array.from(sortedMap)[i][0]) {
               bestGames.push(gameObject);
+              for (let sale of gameObject.sales) {
+                temporalLabels.add(sale.platform);
+              }
             }
           });
         }
-        console.log("bestGames: ", bestGames);
+        labels = Array.from(temporalLabels);
+        //console.log("labels: ", labels);
+        // console.log("bestGames: ", bestGames);
 
         for (let i = 0; i < labels.length; i++) {
           temporalDataset = {};

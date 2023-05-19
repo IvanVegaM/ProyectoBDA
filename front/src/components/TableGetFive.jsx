@@ -12,7 +12,7 @@ function TableGetFive(props) {
       const json = await props.getData(value);
       if (!ignore) {
         setData(json.genres);
-        console.log("Cinco ", data);
+        // console.log("Cinco ", data);
       }
     }
 

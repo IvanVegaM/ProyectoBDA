@@ -1,8 +1,10 @@
 const API_URL = "http://localhost:3000/api";
 
-export async function getUno() {
+export async function getUno(generation) {
   try {
-    const response = await fetch(API_URL + "/uno");
+    const response = await fetch(
+      API_URL + "/uno?" + new URLSearchParams({ generation: generation })
+    );
     const json = await response.json();
     return json;
   } catch (error) {
@@ -33,11 +35,11 @@ export async function getTres() {
   }
 }
 
-export async function getCuatro(gameSales2, setGameSales2) {
+export async function getCuatro() {
   try {
     const response = await fetch(API_URL + "/cuatro");
-    setGameSales2(await response.json());
-    console.log("Cuatro ", gameSales2);
+    const json = await response.json();
+    return json;
   } catch (error) {
     console.error(error);
   }
