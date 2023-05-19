@@ -24,7 +24,7 @@ function TableGetNine(props) {
 
   return (
     <div className='table-get-nine'>
-      <h3>Los 20 juegos más deseados</h3>
+      <h3>Los 20 videojuegos más deseados</h3>
       <table>
         <thead>
           <tr>

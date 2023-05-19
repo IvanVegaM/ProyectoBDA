@@ -135,12 +135,13 @@ function LineChartGetEight(props) {
               <>
                 {lowerValue === 0 && upperValue === 5 ? (
                   <h3>
-                    Los mejores juegos de todas las calificaciones por ventas
-                    son:
+                    Los mejores videojuegos de todas las calificaciones por
+                    ventas son:
                   </h3>
                 ) : (
                   <h3>
-                    Los mejores juegos de {lowerValue} estrellas por ventas son:
+                    Los mejores videojuegos de {lowerValue} estrellas por ventas
+                    son:
                   </h3>
                 )}
 
@@ -148,7 +149,7 @@ function LineChartGetEight(props) {
                   {bestThree.map((gameObject) => {
                     return (
                       <li key={gameObject.game}>
-                        {gameObject.game} {gameObject.rating} con{" "}
+                        {gameObject.game} ({gameObject.rating} estrellas) con{" "}
                         {gameObject.totalSales.toFixed(2)} MDU
                       </li>
                     );
@@ -156,7 +157,7 @@ function LineChartGetEight(props) {
                 </ol>
               </>
             ) : (
-              <h3>No hay juegos en esta categoría</h3>
+              <h3>No hay videojuegos en esta categoría</h3>
             )}
           </div>
         </div>
