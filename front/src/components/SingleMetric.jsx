@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./css/SingleMetric.css";
 
-function SingleMetric({ title, icon, value }) {
+function SingleMetric({ title, Icon, value }) {
   return (
     <div className='single-metric'>
-      <h3>{title}</h3>
+      {/**/}
       <div className='single-metric-content'>
-        <p>{icon}</p>
-        <p>{value}</p>
+        <Icon className='icon' />
+        <h4>{title}</h4>
       </div>
+      <h3 className='value'>{value}</h3>
     </div>
   );
 }

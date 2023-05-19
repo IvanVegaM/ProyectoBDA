@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./css/SimpleMetrics.css";
 import SingleMetric from "./SingleMetric";
+import {
+  FaCalendar,
+  FaCheckSquare,
+  FaFlag,
+  FaGamepad,
+  FaStar,
+} from "react-icons/fa";
+import { GiGameConsole, GiConsoleController } from "react-icons/gi";
 
 function SimpleMetrics({ getData }) {
   const [data, setData] = useState({});
@@ -17,19 +25,40 @@ function SimpleMetrics({ getData }) {
 
   return (
     <div className='simple-metrics'>
-      <SingleMetric title='El videojuego más vendido' value={data.topGame} />
       <SingleMetric
-        title='La plataforma que más vendió videojuegos'
+        // 'El videojuego más vendido'
+        title='Más vendido'
+        Icon={FaFlag}
+        value={data.topGame}
+      />
+      <SingleMetric
+        // 'La plataforma que más vendió videojuegos'
+        title='Mejor Plataforma'
+        Icon={GiGameConsole}
         value={data.topPlatform}
       />
-      <SingleMetric title='Año con mayores ventas' value={data.topYear} />
-      <SingleMetric title='El videojuego más deseado' value={data.topGenre} />
       <SingleMetric
-        title='Categoría que más se vende'
+        // 'Año con mayores ventas'
+        title='Mejor Año'
+        Icon={FaCalendar}
+        value={data.topYear}
+      />
+      <SingleMetric
+        // 'El videojuego más deseado'
+        title='Más deseado'
+        Icon={FaStar}
         value={data.topWishlistedGame}
       />
       <SingleMetric
-        title='Promedio ventas de videojuegos'
+        // 'Categoría que más se vende'
+        title='Mejor categoría'
+        Icon={FaCheckSquare}
+        value={data.topGenre}
+      />
+      <SingleMetric
+        // 'Promedio ventas de videojuegos'
+        title='Ventas promedio'
+        Icon={FaGamepad}
         value={data.totalAverageSales}
       />
     </div>

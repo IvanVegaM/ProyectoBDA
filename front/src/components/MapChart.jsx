@@ -87,7 +87,9 @@ const MapChart = (props) => {
                         fill={d ? colorScale(d) : "#888888"}
                         onMouseEnter={() => {
                           setContent(
-                            `${geo.properties.name}: ${d ? d.toFixed(2) : 0}`
+                            `Ventas de ${geo.properties.name}: ${
+                              d ? d.toFixed(2) : 0
+                            }`
                           );
                         }}
                         onMouseLeave={() => {
