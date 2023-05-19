@@ -2,9 +2,7 @@ import "./css/Title.css";
 
 function Title() {
   return (
-    <h1 className='title'>
-      Análisis Ventas de Videojuegos (Cambiar el título)
-    </h1>
+    <h1 className='title'>Análisis de Ventas de Videojuegos de 1980 a 2025</h1>
   );
 }
 

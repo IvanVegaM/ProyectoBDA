@@ -59,7 +59,11 @@ function SimpleMetrics({ getData }) {
         // 'Promedio ventas de videojuegos'
         title='Ventas promedio'
         Icon={FaGamepad}
-        value={data.totalAverageSales}
+        value={`${
+          data.totalAverageSales !== undefined
+            ? data.totalAverageSales.toFixed(2)
+            : 0
+        } MDU`}
       />
     </div>
   );
