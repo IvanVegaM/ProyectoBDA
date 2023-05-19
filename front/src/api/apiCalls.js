@@ -111,3 +111,14 @@ export async function getNueve() {
     return json;
   }
 }
+
+export async function getTop() {
+  try {
+    const response = await fetch(API_URL + "/top");
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error);
+    return json;
+  }
+}

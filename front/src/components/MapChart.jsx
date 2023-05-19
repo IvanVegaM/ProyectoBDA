@@ -6,114 +6,102 @@ import {
   Geography,
   ZoomableGroup,
 } from "react-simple-maps";
+import "./css/MapChart.css";
 
 const url_backend = import.meta.env.VITE_URL_API;
 
 const geoUrl = "features.json";
 
-const colorScale = scaleLinear().domain([1, 8]).range(["#ffedea", "#ff5233"]);
+const colorScale = scaleLinear()
+  .domain([81000, 87000])
+  .range(["#ffedea", "#0052ff"]);
 
-const MapChart = ({ pais, setPais }) => {
+const countriesTable = {
+  MX: "MEX",
+  JP: "JPN",
+  US: "USA",
+  UK: "GBR",
+  AU: "AUS",
+  CA: "CAN",
+  FR: "FRA",
+  DE: "DEU",
+  ES: "ESP",
+  AR: "ARG",
+  CO: "COL",
+};
+
+const MapChart = (props) => {
   const [data, setData] = useState({});
   const [content, setContent] = useState("Todos");
 
-  // const get_data = async () => {
-  //  const response = await fetch(url_backend + "/paises_cantidad");
-  //  const data = await response.json();
-  //  var labels_aux = {};
-  //  data.forEach((element) => {
-  //    labels_aux[element.pais] = element.cantidad;
-  //  });
-  //  await setData(labels_aux);
-  //};
+  const startFetching = async () => {
+    const json = await props.getData();
+    if (json.gameSales) {
+      for (let i = 0; i < json.gameSales.length; i++) {
+        setData((prevState) => {
+          return {
+            ...prevState,
+            [countriesTable[json.gameSales[i].country]]:
+              json.gameSales[i].totalSales,
+          };
+        });
+      }
+    }
+    console.log("mapa: ", json);
+    console.log("data: ", data);
+  };
 
-  //useEffect(() => {
-  //  get_data();
-  //}, [pais]);
+  useEffect(() => {
+    startFetching();
+  }, [true]);
 
   return (
-    <div>
+    <div className='map-all'>
       {content !== "Todos" ? (
-        <h1>
-          Titulo <b>{content}</b>{" "}
-        </h1>
+        <h2>
+          <b>{content}</b>
+          {" MDU"}
+        </h2>
       ) : (
-        <>
-          {pais !== "Todos" ? (
-            <h1>
-              Titulo <b>{pais}</b>{" "}
-            </h1>
-          ) : (
-            <h1>Titulo</h1>
-          )}
-        </>
+        <h2>Ventas de videojuegos por país en Millones de Unidades (MDU)</h2>
       )}
 
-      <ComposableMap
-        projectionConfig={{
-          rotate: [-10, 0, 0],
-          scale: 147,
-        }}
-        className='w-full '
-      >
-        <ZoomableGroup zoom={1.5} center={[0, 0]}>
-          {Object.keys(data).length > 0 && (
-            <Geographies geography={geoUrl}>
-              {({ geographies }) =>
-                geographies.map((geo) => {
-                  const d = data[geo.id];
-                  return (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      {...(geo.id == pais
-                        ? {
-                            style: {
-                              default: {
-                                fill: "#FFC200",
-                                outline: "none",
-                              },
-                              hover: {
-                                fill: "#FFC200",
-                                outline: "none",
-                              },
-                              pressed: {
-                                outline: "none",
-                                fill: "#FFC200",
-                              },
-                            },
-                          }
-                        : {
-                            style: {
-                              default: {
-                                outline: "none",
-                              },
-                              hover: {
-                                outline: "none",
-                              },
-                              pressed: {
-                                outline: "none",
-                              },
-                            },
-                          })}
-                      fill={d ? colorScale(d) : "#F5F4F6"}
-                      onMouseEnter={() => {
-                        setContent(`${geo.properties.name}: ${d ? d : 0}`);
-                      }}
-                      onMouseLeave={() => {
-                        setContent("Todos");
-                      }}
-                      onClick={() => {
-                        //pais == geo.id ? setPais("Todos") : setPais(geo.id);
-                      }}
-                    />
-                  );
-                })
-              }
-            </Geographies>
-          )}
-        </ZoomableGroup>
-      </ComposableMap>
+      <div className='map'>
+        <ComposableMap
+          projectionConfig={{
+            rotate: [0, 0, 0],
+            scale: 120,
+          }}
+          className='w-full '
+        >
+          <ZoomableGroup zoom={1.5} center={[0, 0]}>
+            {Object.keys(data).length > 0 && (
+              <Geographies geography={geoUrl}>
+                {({ geographies }) =>
+                  geographies.map((geo) => {
+                    const d = data[geo.id];
+                    return (
+                      <Geography
+                        key={geo.rsmKey}
+                        geography={geo}
+                        fill={d ? colorScale(d) : "#888888"}
+                        onMouseEnter={() => {
+                          setContent(
+                            `${geo.properties.name}: ${d ? d.toFixed(2) : 0}`
+                          );
+                        }}
+                        onMouseLeave={() => {
+                          setContent("Todos");
+                        }}
+                      />
+                    );
+                  })
+                }
+              </Geographies>
+            )}
+          </ZoomableGroup>
+        </ComposableMap>
+      </div>
     </div>
   );
 };
