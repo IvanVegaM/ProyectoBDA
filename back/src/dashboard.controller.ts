@@ -113,15 +113,13 @@ export async function getTop(req: Request, res: Response) {
   const topYear = await getTopYear();
   const topGenre = await getTopGenre();
   const topWishlistedGame = await getTopWishlistedGame();
-  const totalAveragaSales = await getAverageSales();
-  res
-    .status(200)
-    .send({
-      topGame,
-      topPlatform,
-      topYear,
-      topGenre,
-      topWishlistedGame,
-      totalAveragaSales,
-    });
+  const totalAverageSales = await getAverageSales();
+  res.status(200).send({
+    topGame,
+    topPlatform,
+    topYear,
+    topGenre,
+    topWishlistedGame,
+    totalAverageSales,
+  });
 }

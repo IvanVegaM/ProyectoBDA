@@ -41,7 +41,7 @@ export default {
   topPlatform: `
     select platforms.name as platform from platforms, sales WHERE
     platforms.id = sales.platformId
-    GROUP by platforms.name limit 1;`,
+    GROUP by platforms.name order by sum(sales.totalSales) DESC limit 1;`,
   topGenre: `select genres.name as genre from genres, gameGenre, sales 
     where genres.id = gameGenre.genreId and gameGenre.gameId = sales.gameId 
     group by genres.id order by sum(sales.totalSales) desc limit 1;`,
